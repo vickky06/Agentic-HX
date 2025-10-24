@@ -4,10 +4,12 @@ import asyncio
 import uvicorn
 from contextlib import asynccontextmanager
 from socketio import ASGIApp
+from src.infrastructure.configs.config_init import ConfigInit
 from src.infrastructure.database.connection import DatabaseConnection
 from src.infrastructure.database.config import DatabaseConfig
 from src.presentation.rest.api.app import create_app
 from src.presentation.websockets.websocket_server import sio
+from src.infrastructure.configs.loggers import logger, print  # or your overridden print
 
 
 @asynccontextmanager
@@ -15,10 +17,10 @@ async def lifespan(app):
     """Application lifespan events."""
     # Startup
     print("Starting up...")
-    
     # Initialize database
-    config = DatabaseConfig()
-    db_connection = DatabaseConnection(config)
+    
+    db_config = DatabaseConfig()
+    db_connection = DatabaseConnection(db_config)
     
     try:
         await db_connection.create_tables_async()
@@ -44,12 +46,11 @@ app = ASGIApp(sio, other_asgi_app=fastapi_app)
 
 def main():
     """Main function to run the application."""
+    _config = ConfigInit()
+    uvicorn_config = _config.uvicorn_config
     uvicorn.run(
         "main:app",
-        host="0.0.0.0",
-        port=8000,
-        reload=True,
-        log_level="info",
+        **uvicorn_config,
     )
 
 

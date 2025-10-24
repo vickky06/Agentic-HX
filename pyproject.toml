@@ -22,6 +22,7 @@ dependencies = [
     "passlib[bcrypt]>=1.7.4",
     "python-dotenv>=1.0.0",
     "python-socketio[asyncio-server]>=5.14.2",
+    "colorama>=0.4.6",
 ]
 
 [project.optional-dependencies]

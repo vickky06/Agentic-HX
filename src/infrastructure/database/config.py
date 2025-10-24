@@ -1,18 +1,11 @@
 """Database configuration."""
 
-from typing import Optional
 
 from pydantic import Field
-from pydantic_settings import BaseSettings,SettingsConfigDict
+from src.infrastructure.configs.config_init import ConfigInit
 
 
-class DatabaseConfig(BaseSettings):
-    """Database configuration settings."""
-    model_config = SettingsConfigDict(
-        env_file=".env",
-        case_sensitive=False,
-        extra="ignore",
-    )
+class DatabaseConfig(ConfigInit):
 
     host: str = Field(default="localhost", alias="DB_HOST")
     port: int = Field(default=5432, alias="DB_PORT")
