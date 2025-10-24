@@ -14,13 +14,11 @@ from src.infrastructure.database.connection import DatabaseConnection
 from src.infrastructure.database.config import DatabaseConfig
 
 
-@lru_cache()
 def get_database_config() -> DatabaseConfig:
     """Get database configuration."""
     return DatabaseConfig()
 
 
-@lru_cache()
 def get_database_connection(config: DatabaseConfig = Depends(get_database_config)) -> DatabaseConnection:
     """Get database connection."""
     return DatabaseConnection(config)
@@ -57,3 +55,17 @@ def get_user_service(
 ) -> UserService:
     """Get user service."""
     return UserService(user_repository, user_domain_service)
+
+
+async def create_user_service() -> UserService:
+    """Create user service for testing."""
+    from src.infrastructure.database.connection import DatabaseConnection
+    from src.infrastructure.database.config import DatabaseConfig
+    
+    config = DatabaseConfig()
+    db_connection = DatabaseConnection(config)
+    
+    async with db_connection.async_session_factory() as session:
+        user_repository = UserRepositoryImpl(session)
+        user_domain_service = UserDomainService(user_repository)
+        return UserService(user_repository, user_domain_service)

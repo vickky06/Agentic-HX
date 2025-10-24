@@ -24,6 +24,7 @@ class UserService:
 
     async def create_user(self, request: CreateUserRequest) -> UserResponse:
         """Create a new user."""
+        print("Creating user ......", request)
         email = Email.from_string(request.email)
         
         # Validate using domain service
@@ -94,6 +95,7 @@ class UserService:
             email = Email.from_string(request.email)
             # Check if email is unique (excluding current user)
             if not await self._user_domain_service.is_email_unique(email, user_id_obj):
+                print("Email already exists")
                 raise ValueError("Email already exists")
             user.update_email(email)
         

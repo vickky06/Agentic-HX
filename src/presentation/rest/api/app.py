@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.presentation.handlers.user_handler import router as user_router
+from src.presentation.rest.handlers.user_handler import router as user_router
 
 
 def create_app() -> FastAPI:

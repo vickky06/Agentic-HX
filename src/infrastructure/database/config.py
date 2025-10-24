@@ -3,25 +3,26 @@
 from typing import Optional
 
 from pydantic import Field
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings,SettingsConfigDict
 
 
 class DatabaseConfig(BaseSettings):
     """Database configuration settings."""
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        case_sensitive=False,
+        extra="ignore",
+    )
 
-    host: str = Field(default="localhost", env="DB_HOST")
-    port: int = Field(default=5432, env="DB_PORT")
-    name: str = Field(default="hexagonal_db", env="DB_NAME")
-    user: str = Field(default="postgres", env="DB_USER")
-    password: str = Field(default="password", env="DB_PASSWORD")
-    echo: bool = Field(default=False, env="DB_ECHO")
+    host: str = Field(default="localhost", alias="DB_HOST")
+    port: int = Field(default=5432, alias="DB_PORT")
+    name: str = Field(default="hexagonal_db", alias="DB_NAME")
+    user: str = Field(default="user", alias="DB_USER")
+    password: str = Field(default="password", alias="DB_PASSWORD")
+    echo: bool = Field(default=False, alias="DB_ECHO")
+
     
     @property
     def url(self) -> str:
         """Get database URL."""
         return f"postgresql://{self.user}:{self.password}@{self.host}:{self.port}/{self.name}"
-
-    class Config:
-        """Pydantic configuration."""
-        env_file = ".env"
-        case_sensitive = False

@@ -3,10 +3,11 @@
 import asyncio
 import uvicorn
 from contextlib import asynccontextmanager
-
+from socketio import ASGIApp
 from src.infrastructure.database.connection import DatabaseConnection
 from src.infrastructure.database.config import DatabaseConfig
-from src.presentation.api.app import create_app
+from src.presentation.rest.api.app import create_app
+from src.presentation.websockets.websocket_server import sio
 
 
 @asynccontextmanager
@@ -32,10 +33,13 @@ async def lifespan(app):
 
 
 # Create the FastAPI app instance
-app = create_app()
+fastapi_app = create_app()
 
 # Set the lifespan context
-app.router.lifespan_context = lifespan
+fastapi_app.router.lifespan_context = lifespan
+
+# Combine FastAPI + Socket.IO
+app = ASGIApp(sio, other_asgi_app=fastapi_app)
 
 
 def main():

@@ -136,7 +136,7 @@ def test_presentation():
     print("=" * 40)
     
     try:
-        from src.presentation.api.app import create_app
+        from src.presentation.rest.api.app import create_app
         
         # Test FastAPI app creation
         app = create_app()
