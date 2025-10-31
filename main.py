@@ -3,9 +3,9 @@
 import asyncio
 import uvicorn
 from contextlib import asynccontextmanager
-from socketio import ASGIApp
+from socketio import asgi
 from src.infrastructure.configs.config_init import ConfigInit
-from src.infrastructure.database.connection import DatabaseConnection
+from src.infrastructure.database.databaseConnection import DatabaseConnection
 from src.infrastructure.database.config import DatabaseConfig
 from src.presentation.rest.api.app import create_app
 from src.presentation.websockets.websocket_server import sio
@@ -24,7 +24,7 @@ async def lifespan(app):
     
     try:
         await db_connection.create_tables_async()
-        print("Database tables created successfully")
+        print("Database tables created successfully",level="INFO")
     except Exception as e:
         print(f"Failed to create database tables: {e}")
     
@@ -41,7 +41,7 @@ fastapi_app = create_app()
 fastapi_app.router.lifespan_context = lifespan
 
 # Combine FastAPI + Socket.IO
-app = ASGIApp(sio, other_asgi_app=fastapi_app)
+app = asgi.ASGIApp(sio, other_asgi_app=fastapi_app)
 
 
 def main():

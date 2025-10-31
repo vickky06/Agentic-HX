@@ -14,10 +14,10 @@ src/
 │   ├── entities/             # Domain entities
 │   ├── value_objects/        # Value objects
 │   ├── services/             # Domain services
-│   └── repositories/         # Repository interfaces (ports)
 ├── application/              # Application layer
 │   ├── services/             # Application services (use cases)
 │   └── dtos/                 # Data Transfer Objects
+|   └── repositories/         # Repository interfaces (ports)
 ├── infrastructure/           # Infrastructure layer
 │   ├── database/             # Database implementation
 │   ├── external_apis/        # External API integrations

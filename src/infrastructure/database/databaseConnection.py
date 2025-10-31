@@ -3,8 +3,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
-
-from .config import DatabaseConfig
+from src.infrastructure.database.config import DatabaseConfig
 
 
 class Base(DeclarativeBase):
@@ -22,6 +21,7 @@ class DatabaseConnection:
         self._async_engine = None
         self._session_factory = None
         self._async_session_factory = None
+        print(f"Database URL: {self.config.url}")
 
     @property
     def engine(self):

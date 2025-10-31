@@ -45,7 +45,7 @@ def main():
     print("\n🎉 Setup completed successfully!")
     print("\nNext steps:")
     print("1. Configure your database in .env file")
-    print("2. Create PostgreSQL database: createdb hexagonal_db")
+    print("2. Create PostgreSQL database: createdb {your DB NAME}")
     print("3. Run migrations: uv run alembic upgrade head")
     print("4. Start the application: uv run python main.py")
     print("5. Visit http://localhost:8000/docs for API documentation")
