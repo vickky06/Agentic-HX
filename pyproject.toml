@@ -23,6 +23,8 @@ dependencies = [
     "python-dotenv>=1.0.0",
     "python-socketio[asyncio-server]>=5.14.2",
     "colorama>=0.4.6",
+    "asyncpg>=0.30.0",
+    "socketio>=0.2.1",
 ]
 
 [project.optional-dependencies]

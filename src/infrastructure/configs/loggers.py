@@ -1,8 +1,11 @@
+import asyncio
 import inspect
 import datetime
 from colorama import Fore, Style
 from src.infrastructure.configs.config_init import ConfigInit
 import builtins
+
+from src.infrastructure.database.factory.db_factory import test_db_in_mem, test_db_pgsql
 
 real_print = builtins.print
 LOG_COLORS = {
@@ -63,5 +66,7 @@ def test_logs(env):
         log_error("Boom!")
         print("Hello")
 test_logs(logger.env)
-
+print("testing faCtory")
+asyncio.run(test_db_in_mem())
+asyncio.run(test_db_pgsql())
 

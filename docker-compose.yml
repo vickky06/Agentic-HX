@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    container_name: hx_postgres
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - hx_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: hx_app
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DOCKER_ENV: "true"
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    command: >
+      bash -c "
+        echo '📦 Installing dependencies with UV...' &&
+        uv sync --frozen --no-cache &&
+        echo '🚀 Waiting for Postgres to be ready...' &&
+        until pg_isready -h db -U ${POSTGRES_USER} -d ${POSTGRES_DB}; do
+          echo '⏳ Waiting for DB...';
+          sleep 2;
+        done &&
+        echo '✅ DB Ready — Running migrations...' &&
+        uv run alembic upgrade head &&
+        echo '🚀 Starting FastAPI app...' &&
+        uv run python main.py
+      "
+    volumes:
+      - .:/app
+
+volumes:
+  hx_db_data:
