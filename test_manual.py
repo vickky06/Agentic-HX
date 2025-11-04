@@ -29,5 +29,5 @@ def test_me():
     config = DatabaseConfig()
     print(f"   config.host = {config.host}")
     print(f"   config.port = {config.port}")
-    print(f"   config.name = {config.name}")
+    print(f"   config.name = {config.db_name}")
     print(f"   config.user = {config.user}")
