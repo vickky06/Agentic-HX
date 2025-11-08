@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from src.presentation.rest.handlers.user_handler import router as user_router
+# from src.presentation.rest.handlers.user_handler import router as user_router
 
 
 def create_app() -> FastAPI:
@@ -26,7 +26,7 @@ def create_app() -> FastAPI:
     )
 
     # Include routers
-    app.include_router(user_router)
+    # app.include_router(user_router)
 
     @app.get("/")
     async def root():

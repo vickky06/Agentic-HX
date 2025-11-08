@@ -1,6 +1,9 @@
 """Alembic environment configuration."""
 
 import asyncio
+import os
+from dotenv import load_dotenv
+
 from logging.config import fileConfig
 
 from sqlalchemy import pool
@@ -9,13 +12,26 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 
+# Load environment variables from .env
+load_dotenv()
+
+# Get values
+DB_USER = os.getenv("DB_USER", "viveksingh")
+DB_PASSWORD = os.getenv("DB_PASSWORD", "password")
+DB_NAME = os.getenv("DB_NAME", "agentic_db")
+DB_HOST = os.getenv("DB_HOST", "db")
+DB_PORT = os.getenv("DB_PORT", "5432")
+
+DB_URL = f"postgresql+asyncpg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+
 # Import your models here
-from src.infrastructure.database.connection import Base
-from src.infrastructure.database.models.user_model import UserModel
+from src.infrastructure.database.databaseConnection import Base
+# from src.infrastructure.database.models.user_model import UserModel
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+config.set_main_option("sqlalchemy.url", DB_URL)
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
