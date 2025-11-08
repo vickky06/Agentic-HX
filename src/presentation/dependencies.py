@@ -24,15 +24,15 @@ def get_database_connection(config: DatabaseConfig = Depends(get_database_config
     return DatabaseConnection(config)
 
 
-async def get_db_session(
-    db_connection: DatabaseConnection = Depends(get_database_connection),
-) -> AsyncGenerator[AsyncSession, None]:
-    """Get database session."""
-    async with db_connection.async_session_factory() as session:
-        try:
-            yield session
-        finally:
-            await session.close()
+# async def get_db_session(
+#     db_connection: DatabaseConnection = Depends(get_database_connection),
+# ) -> AsyncGenerator[AsyncSession, None]:
+#     """Get database session."""
+#     async with db_connection.async_session_factory() as session:
+#         try:
+#             yield session
+#         finally:
+#             await session.close()
 
 
 # def get_user_repository(
