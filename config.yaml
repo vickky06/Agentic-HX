@@ -1,0 +1,30 @@
+app_name: "Agentic-HX"
+app_host: "127.0.0.1"
+app_port: 9000
+
+orchestrator:
+  execution_mode: parallel
+  checkpointing: true
+  timeout: 30
+
+agent_types: #[LLM_AGENT,#TOOL_AGENT,H#UMAN_AGENT,PLA#NNER_AGENT,RETRI#EVER_AGENT#,RAG_AGENT,ME#MORY_AGENT,EXEC#UTOR_AGENT,EVALU#ATOR_AGENT,SUPERV#ISOR_AGENT,#META_AGENT,CHECKP#OINT_AGENT,SELE#CTOR_AGENT,REFLE#XIVE_AGENT,DIAL#OGUE_AGENT,MON#ITOR_AGENT,GUARD#RAIL_AGENT,AGGREG#ATOR_AGENT,ITER#ATOR_AGENT,CUSTOM_AGENT,]
+  - { name: LLM_AGENT, class: "src.infrastructure.agents.llm_agent.LlmAgent" }
+  - { name: HUMAN_AGENT, class: "src.infrastructure.agents.human_agent.HumanAgent" }
+  - { name: RETRIEVER_AGENT, class: "src.infrastructure.agents.retriever_agent.RetrieverAgent" }
+  # - { name: RAG_AGENT, class: "src.infrastructure.agents.rag_agent.RagAgent" }
+  # - { name: PLANNER_AGENT, class: "src.infrastructure.agents.planner_agent.PlannerAgent" }
+  # - { name: TOOL_AGENT, class: "src.infrastructure.agents.tool_agent.ToolAgent" }
+  # - { name: MEMORY_AGENT, class: "src.infrastructure.agents.memory_agent.MemoryAgent" }
+  # - { name: EXECUTOR_AGENT, class: "src.infrastructure.agents.executor_agent.ExecutorAgent" }
+  # - { name: EVALUATOR_AGENT, class: "src.infrastructure.agents.evaluator_agent.EvaluatorAgent" }
+  # - { name: SUPERVISOR_AGENT, class: "src.infrastructure.agents.supervisor_agent.SupervisorAgent" }
+  # - { name: META_AGENT, class: "src.infrastructure.agents.meta_agent.MetaAgent" }
+  # - { name: CHECKPOINT_AGENT, class: "src.infrastructure.agents.checkpoint_agent.CheckpointAgent" }
+  # - { name: SELECTOR_AGENT, class: "src.infrastructure.agents.selector_agent.SelectorAgent" }
+  # - { name: REFLEXIVE_AGENT, class: "src.infrastructure.agents.reflexive_agent.ReflexiveAgent" }
+  # - { name: DIALOGUE_AGENT, class: "src.infrastructure.agents.dialogue_agent.DialogueAgent" }
+  # - { name: MONITOR_AGENT, class: "src.infrastructure.agents.monitor_agent.MonitorAgent" }
+  # - { name: GUARDRAIL_AGENT, class: "src.infrastructure.agents.guardrail_agent.GuardrailAgent" }
+  # - { name: AGGREGATOR_AGENT, class: "src.infrastructure.agents.aggregator_agent.AggregatorAgent" }
+  # - { name: ITERATOR_AGENT, class: "src.infrastructure.agents.iterator_agent.IteratorAgent" }
+  # - { name: CUSTOM_AGENT, class: "src.infrastructure.agents.custom_agent.CustomAgent" }

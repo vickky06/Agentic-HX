@@ -1,6 +1,6 @@
 # src/presentation/websockets/websocket_server.py
 
-from socketio import AsyncServer
+from socketio.async_server import AsyncServer
 
 # Socket.IO server
 sio = AsyncServer(async_mode="asgi", cors_allowed_origins="*")
@@ -17,13 +17,13 @@ async def disconnect(sid):
     """Client disconnected."""
     print(f"[socket] disconnect sid={sid}")
 
-@sio.on("ping")
+@sio.on("ping") # type: ignore
 async def handle_ping(sid, data):
     """Optional ping/pong."""
     print(f"[socket] ping received: {data}")
     await sio.emit("pong", {"received": data}, room=sid)
 
-@sio.on("send_message")
+@sio.on("send_message") # type: ignore
 async def send_message(sid, data: dict):
     """
     1-1 chat message.
